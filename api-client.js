@@ -50,7 +50,8 @@ const deleteTask = async (hash) => {
 const putTask = async (hash, task) => {
     try {
         const put = await fetch(`${endpointUrl}/${hash}.json`, {method: 'PUT', body: JSON.stringify(task) });
-        return put;
+        const json = await put.json();
+        return json;
     } catch (error) {
         console.log(error);
     }

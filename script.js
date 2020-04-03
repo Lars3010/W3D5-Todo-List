@@ -16,17 +16,18 @@ const createTaskItem = (task) => {
     const checkbox = document.createElement('input');
     checkbox.type = "checkbox";
     checkbox.classList.add('checkbox-done');
-    if(task.done) {
-        checkbox.checked = true;
-    }
     div.appendChild(checkbox);
-
+    
     //create description
     const p = document.createElement('p');
     p.classList.add('task-description');
     const taskdescription = document.createTextNode(task.description);
     p.appendChild(taskdescription);
     div.appendChild(p);
+    if(task.done) {
+        checkbox.checked = true;
+        p.classList.add('strikethrough');
+    }
 
     //create delete button
     const deleteButton = document.createElement('button');
@@ -65,6 +66,9 @@ const convertResponse = async () => {
     return tasks;
 }
 
+/**
+ * Function that handles all input from the navbar to add new tasks
+ */
 const handleNavInput = async () => {
     const taskDescription = navTextInput.value;
     const task = {description: taskDescription, done: false};
@@ -75,9 +79,10 @@ const handleNavInput = async () => {
     taskContainer.appendChild(taskItem);
 }
 
+/**
+ * Function that handles all delegated eventlisteners. Handles delete button event, checkbox clicks and description changes.
+ */
 const handleDynamicListener = async (event) => {
-    console.log(event.target);
-    
     if(event.target.matches('.delete-button')){
         const hash = event.target.closest('.task-item').id;
         await deleteTask(hash);
@@ -86,10 +91,50 @@ const handleDynamicListener = async (event) => {
     else if(event.target.matches('.checkbox-done')){
         const hash = event.target.closest('.task-item').id;
         const description = event.target.closest('.task-item').children[1].textContent;
-        const done = event.target.closest('.checkbox-done') ? true : false;
+        const done = event.target.closest('.checkbox-done').checked ? true : false;
+        if(done)
+        {
+            event.target.closest('.task-item').children[1].classList.add('strikethrough');
+        }
+        else {
+            event.target.closest('.task-item').children[1].classList.remove('strikethrough');
+        }
         const newTask = {description: description, done: done};
-        console.log(newTask);
-        
+        await putTask(hash, newTask);        
+    }
+    else if(event.target.matches('.task-description')){
+        //create input and set value to match current content
+        const newInput = document.createElement('input');
+        newInput.type = "text";
+        newInput.classList.add('edit-description');
+        newInput.value = event.target.textContent;
+        event.target.closest('.task-item').replaceChild(newInput, event.target);
+        //add save button
+        const button = document.createElement('button');
+        button.classList.add('save-button');
+        const text = document.createTextNode('Save');
+        button.appendChild(text);
+        newInput.parentNode.insertBefore(button, newInput.nextSibling);
+        //set focus to input
+        newInput.focus();
+    }
+    else if(event.target.matches('.save-button')){
+        //create elements
+        const p = document.createElement('p');
+        const textInput = event.target.closest('.task-item').children[1];
+        p.classList.add('task-description');
+
+        //update database
+        const description = document.createTextNode(textInput.value);
+        const hash = event.target.closest('.task-item').id;
+        const done = textInput.closest('.task-item').children[0].checked ? true : false;
+        const updatedTask = {description: description.textContent, done: done};
+        const x = await putTask(hash, updatedTask);
+
+        //update user interface
+        p.appendChild(description);
+        event.target.closest('.task-item').replaceChild(p, textInput);
+        event.target.remove();
     }
 }
 
