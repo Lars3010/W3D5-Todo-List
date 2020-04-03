@@ -10,6 +10,7 @@ const createTaskItem = (task) => {
     //create containing div
     const div = document.createElement('div');
     div.classList.add('task-item');
+    div.setAttribute('id', task.id);
 
     //create checkbox
     const checkbox = document.createElement('input');
@@ -33,6 +34,7 @@ const createTaskItem = (task) => {
 }
 
 const taskContainer = document.querySelector('main');
+taskContainer.addEventListener('click', () => {handleDynamicListener(event)});
 /**
  * Function that adds all tasks that where recieved from the database into the dom by using the createTaskItem function
  */
@@ -66,10 +68,17 @@ const handleNavInput = async() => {
     const task = {description: taskDescription, done: false};
     const post = await postTask(task);
     const json = await post.json();
-    //console.log(json); - gets the hash id that is returned if post succeeds
+    task.id = json.name;
     const taskItem = createTaskItem(task);
     taskContainer.appendChild(taskItem);
-    
+}
+
+const handleDynamicListener = (event) => {
+    console.log(event.target);
+    if(event.target.matches('.delete-button')){
+        const hash = event.target.closest('.task-item').id;
+        
+    }
 }
 
 const navTextInput = document.querySelector('nav input');
