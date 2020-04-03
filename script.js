@@ -39,13 +39,10 @@ const taskContainer = document.querySelector('main');
 const addTasksToDom = async () => {
     const tasks = await convertResponse();
     const taskItems = tasks.map(item => {
-        console.log('Item',item);
         const taskItem = createTaskItem(item);
         return taskItem;
     });
     taskItems.forEach(item => {
-        console.log(item);
-        
         taskContainer.appendChild(item);
     });
 }
@@ -60,8 +57,18 @@ const convertResponse = async () => {
         description: result[key].description,
         done: result[key].done
     }));
-    console.log("After the tasks array", tasks);
+    //console.log("After the tasks array", tasks);
     return tasks;
 }
+
+const handleNavInput = (event) => {
+    const taskDescription = navTextInput.value;
+    const task = {description: taskDescription, done: false};
+    
+}
+
+const navTextInput = document.querySelector('nav input');
+const addButton = document.getElementById('add-button');
+addButton.addEventListener('click', handleNavInput)
 
 addTasksToDom();
