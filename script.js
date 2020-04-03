@@ -86,9 +86,7 @@ const handleDynamicListener = async (event) => {
     else if(event.target.matches('.checkbox-done')){
         const hash = event.target.closest('.task-item').id;
         const description = event.target.closest('.task-item').children[1].textContent;
-        console.log(description);
         const done = event.target.closest('.checkbox-done') ? true : false;
-        console.log(done);
         const newTask = {description: description, done: done};
         console.log(newTask);
         
