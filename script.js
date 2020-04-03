@@ -7,9 +7,11 @@
  * @param {boolean} task.done - Bool that determines wether the task has been completed.
  */
 const createTaskItem = (task) => {
+    //create containing div
     const div = document.createElement('div');
     div.classList.add('task-item');
 
+    //create checkbox
     const checkbox = document.createElement('input');
     checkbox.type = "checkbox";
     if(task.done) {
@@ -17,11 +19,13 @@ const createTaskItem = (task) => {
     }
     div.appendChild(checkbox);
 
+    //create description
     const p = document.createElement('p');
     const taskdescription = document.createTextNode(task.description);
     p.appendChild(taskdescription);
     div.appendChild(p);
 
+    //create delete button
     const deleteButton = document.createElement('button');
     deleteButton.classList.add('delete-button');
     div.appendChild(deleteButton);
