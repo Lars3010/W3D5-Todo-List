@@ -15,6 +15,7 @@ const createTaskItem = (task) => {
     //create checkbox
     const checkbox = document.createElement('input');
     checkbox.type = "checkbox";
+    checkbox.classList.add('checkbox-done');
     if(task.done) {
         checkbox.checked = true;
     }
@@ -22,6 +23,7 @@ const createTaskItem = (task) => {
 
     //create description
     const p = document.createElement('p');
+    p.classList.add('task-description');
     const taskdescription = document.createTextNode(task.description);
     p.appendChild(taskdescription);
     div.appendChild(p);
@@ -75,10 +77,19 @@ const handleNavInput = async () => {
 
 const handleDynamicListener = async (event) => {
     console.log(event.target);
+    
     if(event.target.matches('.delete-button')){
         const hash = event.target.closest('.task-item').id;
         await deleteTask(hash);
         event.target.closest('.task-item').remove();
+    }
+    else if(event.target.matches('.checkbox-done')){
+        const hash = event.target.closest('.task-item').id;
+        const description = event.target.closest('.task-item').children[1].textContent;
+        const done = event.target.closest('.checkbox-done') ? true : false;
+        const newTask = {description: description, done: done};
+        console.log(newTask);
+        
     }
 }
 
