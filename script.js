@@ -63,7 +63,7 @@ const convertResponse = async () => {
     return tasks;
 }
 
-const handleNavInput = async() => {
+const handleNavInput = async () => {
     const taskDescription = navTextInput.value;
     const task = {description: taskDescription, done: false};
     const post = await postTask(task);
@@ -73,11 +73,12 @@ const handleNavInput = async() => {
     taskContainer.appendChild(taskItem);
 }
 
-const handleDynamicListener = (event) => {
+const handleDynamicListener = async (event) => {
     console.log(event.target);
     if(event.target.matches('.delete-button')){
         const hash = event.target.closest('.task-item').id;
-        
+        await deleteTask(hash);
+        event.target.closest('.task-item').remove();
     }
 }
 
