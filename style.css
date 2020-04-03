@@ -1,5 +1,25 @@
-.delete-button {
-    background-image: url('./img/trash-delete-icon.jpg');
-    height: 20px;
-    width: 20px;
+nav {
+    margin-bottom: 50px;
+}
+
+nav input {
+    width: 350px;
+}
+
+.task-item {
+    display: flex;
+    flex-direction: row;
+    align-content: center;
+    background-color: #ddd;
+    height: 65px;
+}
+
+.task-item .delete-button {
+    background-image: url("./img/trash-delete-icon.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 35px;
+    height: 35px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0);
 }
