@@ -61,9 +61,14 @@ const convertResponse = async () => {
     return tasks;
 }
 
-const handleNavInput = (event) => {
+const handleNavInput = async() => {
     const taskDescription = navTextInput.value;
     const task = {description: taskDescription, done: false};
+    const post = await postTask(task);
+    const json = await post.json();
+    //console.log(json); - gets the hash id that is returned if post succeeds
+    const taskItem = createTaskItem(task);
+    taskContainer.appendChild(taskItem);
     
 }
 

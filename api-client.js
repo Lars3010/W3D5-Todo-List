@@ -13,12 +13,17 @@ const getAllTasks = async () => {
     }
 }
 
+/**
+ * Function that posts a task object to the database
+ * @param {Object} task The task object
+ * @param {string} task.description the description of the task
+ * @param {boolean} task.done bool that decides if the task had been completed - default: false
+ */
 const postTask = async(task) => {
     try {
-        const post = await fetch(endpointUrl, {method: 'GET', headers: {'Content-Type': 'application/json'} });
+        const post = await fetch(endpointUrl, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(task) });
         return post;
     } catch (error) {
         console.log(error);
-        return error;
     }
 }
