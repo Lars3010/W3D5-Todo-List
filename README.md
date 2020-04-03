@@ -1,5 +1,5 @@
 # W3D5-Todo-List
-![Screemshot van de todo lijst](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Screenshot App")
+![Screenshot van de todo lijst](https://github.com/Lars3010/W3D5-Todo-List/blob/master/img/screenshot.png "Screenshot App")
 
 Project Week 3, een todo list applicatie die gebruik maakt van Firebase
 
